@@ -9,5 +9,7 @@ jobs:
         - name: checkout repo
           uses: actions/checkout@v5
         - name: list the repo contents
-          run: ls -lrt
+          run: |
+               ls -lrt
+               cat Readme.md
         
