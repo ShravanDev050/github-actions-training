@@ -1,0 +1,13 @@
+name: generate artwork
+
+on: push
+
+jobs:
+    generate_artwork:
+        runs-on: ubuntu-latest
+        steps:
+        - name: change script permission
+          run: chmod +x ascii-script.sh
+              
+        - name: run shell script
+          run: ./ascii-script.sh
