@@ -1,0 +1,56 @@
+name: generate artwork
+
+on: push
+
+jobs:
+    build_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: checkout repo
+          uses: actions/checkout@v4
+
+        - name: change script permission
+          run: chmod +x ascii-script.sh
+
+        - name: run shell script
+          run: ./ascii-script.sh
+        
+        - name: upload artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: dragon-text-artifact
+            path: dragon.txt
+
+        - name: sleep for 10 seconds
+          run: sleep 10
+    
+    test_job:
+        needs: build_job
+        runs-on: ubuntu-latest
+        steps:
+        - name: download artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: dragon-text-artifact
+
+        - name: sleep for 10 seconds
+          run: sleep 10
+        
+        - name: Test file exists
+          run: grep -i "dragon" dragon.txt
+    
+    deploy_job:
+        needs: test_job
+        runs-on: ubuntu-latest
+        steps:
+        - name: download artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: dragon-text-artifact
+
+        - name: read file
+          run: cat dragon.txt
+
+        - name: echo deploy message
+          run: echo "deploying ........."
+
