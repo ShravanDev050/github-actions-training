@@ -1,0 +1,10 @@
+name: Test Flow
+
+on: push
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: welcome message
+          run: echo "Hello world"
