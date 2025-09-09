@@ -1,0 +1,28 @@
+
+## setting variable and secret at repository level
+name: Exploring variables and secrets at repo level
+
+on: 
+    schedule:
+    - cron: '*/1 * * * *'
+
+jobs:
+   docker:
+     runs-on: ubuntu-latest
+     steps:
+     - name: docker build
+       run: echo docker build -t ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}
+   
+     - name: Docker login         
+       run: echo docker login --username=${{vars.DOCKER_USERNAME}} --password=${{secrets.DOCKER_PASSWORD}}
+
+     - name: Docker publish
+       run: echo docker push ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}
+   
+   deploy:
+     needs: docker
+     runs-on: ubuntu-latest
+     steps:
+     - name: Docker Run
+       run: echo docker run -d -p 8080:80 ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}   
+   
