@@ -2,7 +2,8 @@
 ## setting variable and secret at repository level
 name: workflow-dispatch type workflow
 
-on: workflow_dispatch
+on: 
+    workflow_dispatch:
 jobs:
    docker:
      runs-on: ubuntu-latest
