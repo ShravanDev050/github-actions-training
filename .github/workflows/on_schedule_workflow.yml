@@ -4,7 +4,7 @@ name: Exploring variables and secrets at repo level
 
 on: 
     schedule:
-    - cron: '* * * * *'
+    - cron: "* * * * *"
 
 jobs:
    docker:
