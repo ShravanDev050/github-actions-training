@@ -4,7 +4,7 @@ name: Exploring variables and secrets at repo level
 
 on: 
     schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/6 * * * *"
     workflow_dispatch: 
 
 jobs:
@@ -25,5 +25,4 @@ jobs:
      runs-on: ubuntu-latest
      steps:
      - name: Docker Run
-       run: echo docker run -d -p 8080:80 ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}   
-   
+       run: echo docker run -d -p 8080:80 ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}
