@@ -1,0 +1,26 @@
+name: Workflow_matrix_v1
+
+on:
+    workflow_dispatch
+jobs:
+    deploy_on_ubuntu:
+        runs-on: ubuntu-latest
+        steps:
+        - name: get docker version
+          run: echo docker --version
+
+        - name: run hello world image
+          run: docker run hello-world
+
+    
+    
+    deploy_on_windows:
+        runs-on: windows-latest
+        steps:
+        - name: get docker version
+          run: echo docker --version
+
+        - name: run hello world image
+          run: docker run hello-world
+
+    
