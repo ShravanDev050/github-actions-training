@@ -1,0 +1,17 @@
+name: Workflow_matrix_v2
+
+on:
+    workflow_dispatch
+jobs:
+    deploy:
+        strategy:
+            matrix:
+             os: [ubuntu-latest,windows-latest]
+             images: [hello-world,alpine]
+        runs-on: ${{matrix.os}}
+        steps:
+        - name: get docker version
+          run: echo docker --version
+
+        - name: run ${{matrix.images}}
+          run: docker run ${{matrix.images}}
