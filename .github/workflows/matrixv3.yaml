@@ -1,0 +1,25 @@
+name: exploring matrix with include and exclude keys
+
+on:
+    workflow_dispatch
+
+jobs:
+    deploy:
+        strategy:
+            matrix:
+                os: [windows-latest,ubuntu-latest]
+                images: [hello-world,alpine]
+                exclude:
+                    - images: alpine
+                      os: windows-latest
+                include:
+                    - images: alpine
+                      os: windows-latest
+        runs-on: ${{matrix.os}}
+        steps:
+        - name: get docker version
+          run: echo docker --version
+        
+        - name: run ${{matrix.images}} container
+          run: docker run ${{matrix.images}}
+                
