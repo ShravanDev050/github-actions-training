@@ -1,0 +1,30 @@
+name: Exploring timeout minute tag
+
+on: 
+    workflow_dispatch: 
+
+jobs:
+   docker:
+     runs-on: ubuntu-latest
+     steps:
+     - name: docker build
+       run: echo docker build -t ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}
+   
+     - name: Docker login         
+       run: echo docker login --username=${{vars.DOCKER_USERNAME}} --password=${{secrets.DOCKER_PASSWORD}}
+
+     - name: Docker publish
+       run: echo docker push ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}
+   
+   deploy:
+     timeout-minutes: 1
+     needs: docker
+     concurrency: 
+        cancel-in-progress: true
+        group: production-docker-build
+     runs-on: ubuntu-latest
+     steps:
+     - name: Docker Run
+       run: |
+        echo docker run -d -p 8080:80 ${{vars.CONTAINER_REGISTRY}}/${{vars.DOCKER_USERNAME}}/${{vars.IMAGE_NAME}}
+        sleep 600
